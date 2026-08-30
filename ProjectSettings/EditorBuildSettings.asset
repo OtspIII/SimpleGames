@@ -18,3 +18,4 @@ EditorBuildSettings:
     path: Assets/Generic Assets/You Lose.unity
     guid: 44c9c043ab0c1d045b5f53f6f89f610a
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FirstPersonController : MonoBehaviour
 {
@@ -32,11 +33,12 @@ public class FirstPersonController : MonoBehaviour
     void Update()
     {
         //If my mouse goes left/right my body moves left/right
-        float xRot = Input.GetAxis("Mouse X") * MouseSensitivity;
+        Vector2 mouseOffset = Mouse.current.delta.value;
+        float xRot =  mouseOffset.x * MouseSensitivity;
         transform.Rotate(0,xRot,0);
         
         //If my mouse goes up/down my aim (but not body) go up/down
-        float yRot = -Input.GetAxis("Mouse Y") * MouseSensitivity;
+        float yRot = -mouseOffset.y * MouseSensitivity;
         Eyes.transform.Rotate(yRot,0,0);
 
         //Movement code
@@ -46,19 +48,19 @@ public class FirstPersonController : MonoBehaviour
             Vector3 move = Vector3.zero;
             
             //transform.forward/right are relative to the direction my body is facing
-            if (Input.GetKey(KeyCode.W))
+            if (Keyboard.current.wKey.isPressed)
                 move += transform.forward;
-            if (Input.GetKey(KeyCode.S))
+            if (Keyboard.current.sKey.isPressed)
                 move -= transform.forward;
-            if (Input.GetKey(KeyCode.A))
+            if (Keyboard.current.aKey.isPressed)
                 move -= transform.right;
-            if (Input.GetKey(KeyCode.D))
+            if (Keyboard.current.dKey.isPressed)
                 move += transform.right;
             //I reduce my total movement to 1 and then multiply it by my speed
             move = move.normalized * WalkSpeed;
             
             //If I hit jump and am on the ground, I jump
-            if (JumpPower > 0 && Input.GetKeyDown(KeyCode.Space) && OnGround())
+            if (JumpPower > 0 && Keyboard.current.spaceKey.wasPressedThisFrame && OnGround())
                 move.y = JumpPower;
             else  //Otherwise, my Y velocity is whatever it was last frame
                 move.y = RB.linearVelocity.y;
@@ -68,7 +70,7 @@ public class FirstPersonController : MonoBehaviour
         }
 
         //If I click. . .
-        if (Input.GetMouseButtonDown(0))
+        if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             //Spawn a projectile right in front of my eyes
             Instantiate(ProjectilePrefab, Eyes.transform.position + Eyes.transform.forward,

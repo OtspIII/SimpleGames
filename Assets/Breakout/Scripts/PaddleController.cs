@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PaddleController : MonoBehaviour
 {
@@ -15,10 +16,10 @@ public class PaddleController : MonoBehaviour
         Vector3 pos = transform.position;
         
         //If I hit left, go left
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Keyboard.current.leftArrowKey.isPressed)
             pos += new Vector3(-Speed * Time.deltaTime, 0, 0);
         //If I hit right, go right
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (Keyboard.current.rightArrowKey.isPressed)
             pos += new Vector3(Speed * Time.deltaTime, 0, 0);
         
         //If I go off the edges of the screen, don't

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
@@ -29,21 +30,21 @@ public class PlayerMovement : MonoBehaviour
     {
         //You've seen this movement code before
         Vector2 vel = Vector2.zero;
-        if (Input.GetKey(KeyCode.D))
+        if (Keyboard.current.dKey.isPressed)
             vel.x = Speed;
-        else if (Input.GetKey(KeyCode.A))
+        else if (Keyboard.current.aKey.isPressed)
             vel.x = -Speed;
-        if (Input.GetKey(KeyCode.W))
+        if (Keyboard.current.wKey.isPressed)
             vel.y = Speed;
-        else if (Input.GetKey(KeyCode.S))
+        else if (Keyboard.current.sKey.isPressed)
             vel.y = -Speed;
         RB.linearVelocity = vel;
         
         //If I click, shoot!
-        if (Input.GetMouseButtonDown(0))
+        if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             //Okay, but where am I aiming? Let's find out where the mouse cursor is
-            Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 pos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             //This little bit of math calculates what direction the bullet should
             //  aim to be facing at the mouse cursor. Don't sweat the details
             float angle = Mathf.Atan2(pos.y-transform.position.y, pos.x-transform.position.x) * Mathf.Rad2Deg;

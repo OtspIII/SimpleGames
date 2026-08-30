@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -57,14 +58,14 @@ public class PlayerScript : MonoBehaviour
         //By default, I move like I moved last frame
         Vector2 vel = RB.linearVelocity;
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Keyboard.current.rightArrowKey.isPressed)
         { 
             //If I hit right, move right
             vel.x = Speed;
             //If I hit right, mark that I'm not facing left
             FacingLeft = false;
         }
-        else if (Input.GetKey(KeyCode.LeftArrow))
+        else if (Keyboard.current.leftArrowKey.isPressed)
         { 
             //If I hit left, move right
             vel.x = -Speed;
@@ -77,7 +78,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         //If I hit Z and can jump, jump
-        if (Input.GetKeyDown(KeyCode.Z) && CanJump())
+        if (Keyboard.current.zKey.wasPressedThisFrame && CanJump())
         { 
             vel.y = JumpPower;
             //Emit 5 dust cloud particles

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
@@ -43,7 +44,7 @@ public class DialogueManager : MonoBehaviour
     private void Update()
     {
         //If I hit space. . .
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             //Set the current line of dialogue to the next one
             Index++;

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GridPlayerController : TileContentsController
 {
@@ -10,24 +11,24 @@ public class GridPlayerController : TileContentsController
     
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
         {
             //If I hit right, go right
             Move(1,0);
             //And then tell the Grid Manager that I took my turn and everyone else can take theirs
             GridManager.Me.TakeTurn();
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
         {
             Move(-1,0);
             GridManager.Me.TakeTurn();
         }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Keyboard.current.upArrowKey.wasPressedThisFrame)
         {
             Move(0,1);
             GridManager.Me.TakeTurn();
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Keyboard.current.downArrowKey.wasPressedThisFrame)
         {
             Move(0,-1);
             GridManager.Me.TakeTurn();
